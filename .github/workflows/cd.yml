@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: [user-service, ai-service, test-section-service, result-service, notifaction-service, geteway]
+        service: [user-service, ai-service, test-section-service, result-service, notifaction-service, arena-geteway]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
