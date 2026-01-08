@@ -8,7 +8,7 @@ import (
 type UserUsecase interface {
 	GetUserByTelegramID(telegramID int64) (*domain.User, error)
 	CreateUser(input *domain.User) (*domain.User, error)
-	DeleteUserByTelegramID(telegramID int64) (bool, error) // ✅ yangi funksiya
+	DeleteUserByTelegramID(telegramID int64) (bool, error) 
 }
 
 // usecase struct

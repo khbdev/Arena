@@ -1,14 +1,12 @@
 package main
 
 import (
-	"fmt"
-	"log"
 	"net"
 	"os"
+
 	"user-service/internal/config"
 	"user-service/internal/handler"
 	"user-service/internal/repostroy/mysql"
-
 	"user-service/internal/usecase"
 
 	"github.com/joho/godotenv"
@@ -18,26 +16,24 @@ import (
 )
 
 func main() {
-	// 1️⃣ Load .env
-	if err := godotenv.Load(); err != nil {
-		log.Fatalf("Failed to load .env file: %v", err)
-	}
-	config.InitRedis()
-	// 2️⃣ MySQL connection
-	db := config.NewMySQLConnection()
-	fmt.Println("MySQL Connection Successful")
+	// Load .env (error bilan shug‘ullanmaymiz)
+	_ = godotenv.Load()
 
-	// 3️⃣ Repository
+	// MySQL connection
+	db := config.NewMySQLConnection()
+      
+	   
+	// Repository
 	userRepo := mysql.NewUserRepository(db)
 
-	// 4️⃣ Usecase
+	// Usecase
 	userUsecase := usecase.NewUserUsecase(userRepo)
 
-	// 5️⃣ Handler
+	// Handler
 	userHandler := handler.NewUserHandler(userUsecase)
 	userDeleteHandler := handler.NewTelegramHandler(userUsecase)
 
-	// 6️⃣ gRPC server
+	// gRPC server
 	grpcPort := os.Getenv("GRPC_PORT")
 	if grpcPort == "" {
 		grpcPort = "50051"
@@ -45,15 +41,14 @@ func main() {
 
 	lis, err := net.Listen("tcp", ":"+grpcPort)
 	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+		panic(err)
 	}
 
 	grpcServer := grpc.NewServer()
 	userpb.RegisterUserServiceServer(grpcServer, userHandler)
 	userdeletepb.RegisterTelegramServiceServer(grpcServer, userDeleteHandler)
 
-	fmt.Printf("gRPC server listening on port %s...\n", grpcPort)
 	if err := grpcServer.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
+		panic(err)
 	}
 }
