@@ -19,7 +19,7 @@ func PublishNotification(ch *amqp.Channel, telegramID int64, testID string) erro
 
 	body, err := json.Marshal(event)
 	if err != nil {
-		return fmt.Errorf("JSON marshal xatolik: %v", err)
+		return fmt.Errorf("JSON marshal error: %v", err)
 	}
 
 	queueName := "notifications_queue"
@@ -27,7 +27,7 @@ func PublishNotification(ch *amqp.Channel, telegramID int64, testID string) erro
 	
 	err = ch.Publish(
 		"",        // exchange
-		queueName, // routing key = queue nomi
+		queueName, // routing key = queue name
 		false,     // mandatory
 		false,     // immediate
 		amqp.Publishing{
@@ -36,7 +36,7 @@ func PublishNotification(ch *amqp.Channel, telegramID int64, testID string) erro
 		},
 	)
 	if err != nil {
-		return fmt.Errorf("RabbitMQ publish xatolik: %v", err)
+		return fmt.Errorf("RabbitMQ publish error: %v", err)
 	}
 
 	log.Println(" Event notifications_queue ga yuborildi:", string(body))
