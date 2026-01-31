@@ -34,10 +34,11 @@ func InitRedis() {
 
 
 	pong, err := RedisClient.Ping(Ctx).Result()
-	if err != nil {
-		log.Fatalf(" Redisga ulanishda xatolik: %v", err)
-	}
-	fmt.Println("Redis ulandi:", pong)
+if err != nil {
+	log.Fatalf("Failed to connect to Redis: %v", err)
+}
+fmt.Println("Connected to Redis:", pong)
+
 }
 
 

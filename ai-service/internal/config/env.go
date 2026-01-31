@@ -10,6 +10,6 @@ import (
 
 func Init() {
 	if err := godotenv.Load(); err != nil {
-		log.Println(" .env fayli topilmadi")
+		log.Println(" .env file not found")
 	}
 }
