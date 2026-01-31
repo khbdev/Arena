@@ -19,7 +19,8 @@ var (
 func InitRedis() {
 
 	if err := godotenv.Load(); err != nil {
-		log.Println("⚠️ .env fayl topilmadi, default qiymatlar ishlatiladi")
+	log.Println(".env file was not found; default configuration values will be used")
+
 	}
 
 	addr := getEnv("REDIS_HOST", "localhost:6379")
