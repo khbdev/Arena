@@ -39,6 +39,6 @@ func PublishNotification(ch *amqp.Channel, telegramID int64, testID string) erro
 		return fmt.Errorf("RabbitMQ publish error: %v", err)
 	}
 
-	log.Println(" Event notifications_queue ga yuborildi:", string(body))
+log.Println("Event successfully published to notifications_queue:", string(body))
 	return nil
 }
