@@ -9,9 +9,7 @@ import (
 	"os"
 )
 
-// ======================
-// Domain models
-// ======================
+
 
 type Option struct {
 	ID   string `json:"id"`
@@ -25,9 +23,7 @@ type Question struct {
 	Correct  string   `json:"correct"`
 }
 
-// ======================
-// ProcessPrompt
-// ======================
+
 
 // ProcessPrompt prompt bo‘yicha savollar generatsiya qiladi
 // Agar AI noto‘g‘ri javob yoki limit tugasa, error qaytaradi
@@ -82,9 +78,7 @@ Do NOT use markdown.
 		return nil, err
 	}
 
-	// ======================
-	// Response parsing
-	// ======================
+	
 
 	var parsed map[string]interface{}
 	if err := json.Unmarshal(respBody, &parsed); err != nil {
@@ -115,10 +109,6 @@ Do NOT use markdown.
 	if !ok || text == "" {
 		return nil, fmt.Errorf("text not found in content")
 	}
-
-	// ======================
-	// JSON → struct
-	// ======================
 
 	var questions []Question
 	if err := json.Unmarshal([]byte(text), &questions); err != nil {

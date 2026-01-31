@@ -8,24 +8,26 @@ import (
 	"github.com/streadway/amqp"
 )
 
-// UnsuccessEvent struct xabarni JSON ga o‘girish uchun
+// UnsuccessEvent represents a failed operation event payload
+// that will be published as JSON.
 type UnsuccessEvent struct {
 	TelegramID int64  `json:"telegram_id"`
-	Message string `json:"message"`
+	Message    string `json:"message"`
 	ErrorMsg   string `json:"error_msg"`
 }
 
-// PublishUnsuccess telegramID va errorMsg ni unsuccess_queue ga yuboradi
+// PublishUnsuccess publishes an unsuccessful event to the unsuccess_queue
+// with the provided telegramID and error message.
 func PublishUnsuccess(ch *amqp.Channel, telegramID int64, errorMsg string) error {
 	event := UnsuccessEvent{
 		TelegramID: telegramID,
-		Message: "Test Yaratishda Xatolik Yuz berdi iltimos keyinroq urinib koring",
+		Message:    "An error occurred while generating the test. Please try again later.",
 		ErrorMsg:   errorMsg,
 	}
 
 	body, err := json.Marshal(event)
 	if err != nil {
-		return fmt.Errorf("JSON marshal xatolik: %v", err)
+		return fmt.Errorf("failed to marshal unsuccess event to JSON: %v", err)
 	}
 
 	queueName := "unsuccess_queue"
@@ -33,7 +35,7 @@ func PublishUnsuccess(ch *amqp.Channel, telegramID int64, errorMsg string) error
 	exchangeName := "direct_exchange"
 
 	err = ch.Publish(
-		exchangeName, // exchange nomi
+		exchangeName, // exchange name
 		routingKey,   // routing key
 		false,        // mandatory
 		false,        // immediate
@@ -43,9 +45,9 @@ func PublishUnsuccess(ch *amqp.Channel, telegramID int64, errorMsg string) error
 		},
 	)
 	if err != nil {
-		return fmt.Errorf("RabbitMQ publish xatolik: %v", err)
+		return fmt.Errorf("failed to publish unsuccess event to RabbitMQ: %v", err)
 	}
 
-	log.Println("Event", queueName, "ga yuborildi:", string(body))
+	log.Println("Event successfully published to", queueName+":", string(body))
 	return nil
 }
