@@ -13,6 +13,7 @@ func InitTelegramBot() *tgbotapi.BotAPI {
 	if token == "" {
 		log.Fatal("❌ TELEGRAM_BOT_TOKEN env da topilmadi")
 	}
+	
 
 	bot, err := tgbotapi.NewBotAPI(token)
 	if err != nil {
