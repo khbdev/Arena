@@ -57,7 +57,7 @@ func (s *TestService) CreateTest(TelegramID int64, questions interface{}) error 
 		return err
 	}
 
-	fmt.Println(" Redis saqlandi, key:", testID)
+	fmt.Println(" Redis Savad, key:", testID)
 
 	
 	return event.PublishNotification(
