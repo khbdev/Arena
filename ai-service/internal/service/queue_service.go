@@ -3,8 +3,9 @@ package service
 import (
 	"ai-service/internal/domain"
 	"ai-service/internal/event"
+	"ai-service/internal/gemini"
 	"ai-service/internal/model"
-	openai "ai-service/internal/openAi"
+	// openai "ai-service/internal/openAi"
 
 	"encoding/json"
 	"fmt"
@@ -34,7 +35,7 @@ func (p *MessageProcessor) ProcessMessage(body []byte) {
 		return
 	}
 
-	questions, err := openai.ProcessPrompt(req.Prompt, req.Count)
+	questions, err := gemini.ProcessPrompt(req.Prompt, req.Count)
 	if err != nil {
 		if pubErr := event.PublishUnsuccess(
 			p.RabbitCh,
