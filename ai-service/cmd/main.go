@@ -4,11 +4,12 @@ import (
 	"ai-service/internal/config"
 	"ai-service/internal/rabbitmq"
 	"ai-service/internal/service"
+	"ai-service/pkg"
 )
 
 func main() {
 	
-	config.Init()
+	pkg.Init()
 	config.InitRedis()
 
 	

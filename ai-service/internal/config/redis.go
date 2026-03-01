@@ -14,14 +14,9 @@ var (
 	RedisClient *redis.Client
 	Ctx         = context.Background()
 )
-
-
+ 
 func InitRedis() {
 
-	if err := godotenv.Load(); err != nil {
-	log.Println(".env file was not found; default configuration values will be used")
-
-	}
 
 	addr := getEnv("REDIS_HOST", "localhost:6379")
 	pass := getEnv("REDIS_PASSWORD", "")
