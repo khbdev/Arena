@@ -8,16 +8,14 @@ import (
 	"github.com/streadway/amqp"
 )
 
-// UnsuccessEvent represents a failed operation event payload
-// that will be published as JSON.
+
 type UnsuccessEvent struct {
 	TelegramID int64  `json:"telegram_id"`
 	Message    string `json:"message"`
 	ErrorMsg   string `json:"error_msg"`
 }
 
-// PublishUnsuccess publishes an unsuccessful event to the unsuccess_queue
-// with the provided telegramID and error message.
+
 func PublishUnsuccess(ch *amqp.Channel, telegramID int64, errorMsg string) error {
 	event := UnsuccessEvent{
 		TelegramID: telegramID,
@@ -35,10 +33,10 @@ func PublishUnsuccess(ch *amqp.Channel, telegramID int64, errorMsg string) error
 	exchangeName := "direct_exchange"
 
 	err = ch.Publish(
-		exchangeName, // exchange name
-		routingKey,   // routing key
-		false,        // mandatory
-		false,        // immediate
+		exchangeName, 
+		routingKey,   
+		false,     
+		false,     
 		amqp.Publishing{
 			ContentType: "application/json",
 			Body:        body,

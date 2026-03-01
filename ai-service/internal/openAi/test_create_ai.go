@@ -25,8 +25,7 @@ type Question struct {
 
 
 
-// ProcessPrompt prompt bo‘yicha savollar generatsiya qiladi
-// Agar AI noto‘g‘ri javob yoki limit tugasa, error qaytaradi
+
 func ProcessPrompt(prompt string, count int) ([]Question, error) {
 	fullPrompt := fmt.Sprintf(`
 Generate %d questions about "%s" in JSON.
@@ -41,7 +40,7 @@ Do NOT explain anything.
 Do NOT use markdown.
 `, count, prompt)
 
-	// Request body
+	
 	body, err := json.Marshal(map[string]interface{}{
 		"model": "gpt-4.1",
 		"input": fullPrompt,
@@ -51,13 +50,13 @@ Do NOT use markdown.
 		return nil, err
 	}
 
-	// API key
+
 	token := os.Getenv("OPENAI_API_KEY")
 	if token == "" {
 		return nil, fmt.Errorf("OPENAI_API_KEY missing")
 	}
 
-	// HTTP request
+
 	req, err := http.NewRequest("POST", "https://api.openai.com/v1/responses", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err

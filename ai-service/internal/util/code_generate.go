@@ -9,7 +9,7 @@ const charset = "0123456789"
 
 func GenerateTestID() string {
 	rand.Seed(time.Now().UnixNano())
-	b := make([]byte, 6)
+	b := make([]byte, 3)
 	for i := range b {
 		b[i] = charset[rand.Intn(len(charset))]
 	}
