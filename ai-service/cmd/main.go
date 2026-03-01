@@ -20,7 +20,10 @@ func main() {
 
 	messageProcress := service.NewMessageProcessor(testService, rabbit.Channel)
 	
-	rabbitmq.NewConsumer(rabbit.Channel, messageProcress)
+ cons :=	rabbitmq.NewConsumer(rabbit.Channel, messageProcress)
+
+ cons.Start()
+
 
 
 	select {} 
