@@ -65,7 +65,7 @@ Do NOT use markdown.
 		return nil, err
 	}
 
-	// ✅ Timeout (osilib qolmasin)
+	
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
 	defer cancel()
 
@@ -75,7 +75,7 @@ Do NOT use markdown.
 	}
 	req.Header.Set("Content-Type", "application/json")
 
-	// ✅ API key’ni header’da beramiz (query emas)
+
 	req.Header.Set("x-goog-api-key", apiKey)
 
 	client := &http.Client{
