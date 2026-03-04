@@ -17,7 +17,7 @@ func (b *Bot) handleTeacherFlow(telegramID, chatID int64, text string) {
 		state.Topic = text
 		state.Step = "waiting_count"
 
-		msg := tgbotapi.NewMessage(chatID, "🔢 Nechta savol kerak? (1 dan 20 tagacha)")
+		msg := tgbotapi.NewMessage(chatID, "🔢 Nechta savol kerak? (1 dan 100 tagacha)")
 		msg.ReplyMarkup = b.getBackMarkup()
 		b.api.Send(msg)
 		return
@@ -26,12 +26,12 @@ func (b *Bot) handleTeacherFlow(telegramID, chatID int64, text string) {
 	if state.Step == "waiting_count" {
 		count, err := strconv.Atoi(text)
 		if err != nil {
-			b.api.Send(tgbotapi.NewMessage(chatID, "❌ Iltimos, faqat son kiriting (1-5)"))
+			b.api.Send(tgbotapi.NewMessage(chatID, "❌ Iltimos, faqat son kiriting (1-100)"))
 			return
 		}
 
-		if count < 1 || count > 5 {
-			b.api.Send(tgbotapi.NewMessage(chatID, "❌ Iltimos, 1 dan 5 gacha son kiriting"))
+		if count < 1 || count > 100 {
+			b.api.Send(tgbotapi.NewMessage(chatID, "❌ Iltimos, 1 dan 100 gacha son kiriting"))
 			return
 		}
 

@@ -44,7 +44,7 @@ Do NOT use markdown.
 
 	model := os.Getenv("GEMINI_MODEL")
 	if model == "" {
-		model = "gemini-1.5-flash" // birinchi test uchun shu ishonchliroq bo'lishi mumkin
+		model = "gemini-1.5-flash"
 	}
 
 	url := fmt.Sprintf("https://generativelanguage.googleapis.com/v1beta/models/%s:generateContent", model)
